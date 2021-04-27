@@ -1,60 +1,69 @@
 {
-    "variables": {
-	"cpus": "1",
-	"mem": "1024",
-	"disk": "8192",
-	"root_pw": "7xh8GmwHkreiRqytKDZx",
-	"ssh_user": "alpine",
-	"ssh_pass": "mPRMAUnJtT2XBBCKh2xw"
-    },
-    "provisioners": [
-        {
-            "override": {
-                "virtualbox-iso": {
-                    "execute_command": "/bin/sh '{{ .Path }}'"
-                }
-            },
-            "type": "shell",
-            "scripts": [
-                "scripts/00_base.sh",
-                "scripts/01_openstack.sh",
-                "scripts/02_docker.sh",
-                "scripts/99_cleanup.sh"
-            ]
+  "builders": [
+    {
+      "boot_command": [
+        "root<enter><wait>",
+        "ifconfig eth0 up \u0026\u0026 udhcpc -i eth0<enter><wait5>",
+        "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
+        "setup-alpine -f answers<enter><wait5>",
+        "{{user `root_pw`}}<enter><wait>",
+        "{{user `root_pw`}}<enter><wait5>",
+        "<wait>y<enter><wait10>",
+        "rc-service sshd stop<enter>",
+        "mount /dev/vg0/lv_root /mnt<enter>",
+        "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
+        "umount /mnt<enter>",
+        "reboot<enter>"
+      ],
+      "disk_size": "{{user `disk`}}",
+      "guest_additions_mode": "disable",
+      "guest_os_type": "Linux26_64",
+      "http_directory": "http",
+      "iso_checksum": "file:https://dl-cdn.alpinelinux.org/alpine/v3.13/releases/x86_64/alpine-virt-3.13.5-x86_64.iso.sha256",
+      "iso_url": "https://dl-cdn.alpinelinux.org/alpine/v3.13/releases/x86_64/alpine-virt-3.13.5-x86_64.iso",
+      "shutdown_command": "/sbin/poweroff",
+      "ssh_password": "{{user `root_pw`}}",
+      "ssh_username": "root",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{ .Name }}",
+          "--memory",
+          "{{ user `mem`}}"
+        ],
+        [
+          "modifyvm",
+          "{{ .Name }}",
+          "--cpus",
+          "{{user `cpus`}}"
+        ]
+      ],
+      "vm_name": "alpine313"
+    }
+  ],
+  "provisioners": [
+    {
+      "override": {
+        "virtualbox-iso": {
+          "execute_command": "/bin/sh '{{ .Path }}'"
         }
-    ],
-    "builders": [
-        {
-	    "vboxmanage": [
-		[ "modifyvm", "{{ .Name }}", "--memory", "{{ user `mem`}}" ],
-		[ "modifyvm", "{{ .Name }}", "--cpus", "{{user `cpus`}}" ]
-	    ],
-            "http_directory": "http",
-            "guest_os_type": "Linux26_64",
-            "boot_command": [
-                "root<enter><wait>",
-                "ifconfig eth0 up && udhcpc -i eth0<enter><wait5>",
-                "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
-                "setup-alpine -f answers<enter><wait5>",
-                "{{user `root_pw`}}<enter><wait>",
-                "{{user `root_pw`}}<enter><wait5>",
-                "<wait>y<enter><wait10>",
-                "rc-service sshd stop<enter>",
-                "mount /dev/vg0/lv_root /mnt<enter>",
-                "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
-                "umount /mnt<enter>",
-                "reboot<enter>"
-            ],
-	    "disk_size": "{{user `disk`}}",
-            "ssh_password": "{{user `root_pw`}}",
-            "ssh_username": "root",
-            "iso_checksum_type": "sha256",
-            "iso_checksum_url": "http://dl-cdn.alpinelinux.org/alpine/v3.8/releases/x86_64/alpine-virt-3.8.2-x86_64.iso.sha256",
-            "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.8/releases/x86_64/alpine-virt-3.8.2-x86_64.iso",
-            "vm_name": "alpine38",
-            "shutdown_command": "/sbin/poweroff",
-            "guest_additions_mode": "disable",
-            "type": "virtualbox-iso"
-        }
-    ]
+      },
+      "scripts": [
+        "scripts/00_base.sh",
+        "scripts/01_openstack.sh",
+        "scripts/99_cleanup.sh"
+      ],
+      "type": "shell"
+    }
+  ],
+  "variables": {
+    "cpus": "1",
+    "disk": "512",
+    "mem": "512",
+    "root_pw": "7xh8GmwHkreiRqytKDZx",
+    "ssh_pass": "mPRMAUnJtT2XBBCKh2xw",
+    "ssh_user": "alpine"
+  }
 }
+

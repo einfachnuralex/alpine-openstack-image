@@ -13,9 +13,3 @@ apk add sudo
 adduser -D alpine -G wheel
 
 echo 'Defaults exempt_group=wheel' > /etc/sudoers
-
-# Update MOTD
-
-cat << EOF > /etc/motd
-$PRETTY_NAME ($VERSION_ID) Development Environment
-EOF
