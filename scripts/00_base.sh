@@ -7,7 +7,7 @@ sed -i -e '1d' /etc/apk/repositories
 apk upgrade --update-cache --available
 
 # Install sudo
-apk add sudo
+apk add --no-cache sudo
 
 # Create Initial User
 adduser -D alpine -G wheel

@@ -1,15 +1,15 @@
 KEYMAPOPTS="us us"
-HOSTNAMEOPTS="-n alpine38"
+HOSTNAMEOPTS="-n yawollet"
 INTERFACESOPTS="auto lo
 iface lo inet loopback
 
 auto eth0
 iface eth0 inet dhcp
 "
-DNSOPTS="-n 8.8.8.8"
+DNSOPTS="-n 1.1.1.1"
 TIMEZONEOPTS="-z UTC"
 PROXYOPTS="none"
 APKREPOSOPTS="-1"
 SSHDOPTS="-c openssh"
-NTPOPTS="-c openntpd"
-DISKOPTS="-L -m sys /dev/sda"
+NTPOPTS="-c chrony"
+DISKOPTS="-L -s 0 -m sys /dev/sda"

@@ -5,10 +5,10 @@
         "root<enter><wait>",
         "ifconfig eth0 up \u0026\u0026 udhcpc -i eth0<enter><wait5>",
         "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
-        "setup-alpine -f answers<enter><wait5>",
+        "BOOT_SIZE=30 setup-alpine -f answers<enter><wait5>",
         "{{user `root_pw`}}<enter><wait>",
         "{{user `root_pw`}}<enter><wait5>",
-        "<wait>y<enter><wait10>",
+        "<wait>y<enter><wait15>",
         "rc-service sshd stop<enter>",
         "mount /dev/vg0/lv_root /mnt<enter>",
         "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
@@ -59,10 +59,10 @@
   ],
   "variables": {
     "cpus": "1",
-    "disk": "512",
+    "disk": "1024",
     "mem": "512",
-    "root_pw": "7xh8GmwHkreiRqytKDZx",
-    "ssh_pass": "mPRMAUnJtT2XBBCKh2xw",
+    "root_pw": "9rMdCxYW37XTUBjPasHW",
+    "ssh_pass": "xBUnScysgtimkKt2M8ij",
     "ssh_user": "alpine"
   }
 }
