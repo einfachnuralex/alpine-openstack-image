@@ -8,7 +8,7 @@ Install Packer: https://www.packer.io/intro/getting-started/install.html
 ## Getting Started
 
 ```
-packer build alpine.json
-qemu-img convert -f vmdk -O raw output-virtualbox-iso/alpine38-disk001.vmdk output-virtualbox-iso/alpine38-disk001.raw
-openstack image create --file output-virtualbox-iso/alpine38-disk001.raw --disk-format raw --container-format bare alpine38
+packer build -var "root_pw=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" alpine.json
+qemu-img convert -f vmdk -O raw output-virtualbox-iso/alpine313-disk001.vmdk output-virtualbox-iso/alpine313-disk001.raw
+openstack image create --file output-virtualbox-iso/alpine313-disk001.raw --disk-format raw --container-format bare alpine38
 ```

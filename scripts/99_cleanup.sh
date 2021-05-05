@@ -5,7 +5,10 @@ apk cache clean
 rm -rf /var/cache/apk/*
 
 # Disable Root SSH Login
-sed -i '/PermitRootLogin yes/d' /etc/ssh/sshd_config
+sed -i '/PermitRootLogin no/d' /etc/ssh/sshd_config
+
+# disable root pw
+passwd root -l
 
 # Fill Disk with Zeros
 dd if=/dev/zero of=/EMPTY bs=1M

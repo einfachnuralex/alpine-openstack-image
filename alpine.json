@@ -59,11 +59,8 @@
   ],
   "variables": {
     "cpus": "1",
-    "disk": "1024",
-    "mem": "512",
-    "root_pw": "9rMdCxYW37XTUBjPasHW",
-    "ssh_pass": "xBUnScysgtimkKt2M8ij",
-    "ssh_user": "alpine"
+    "disk": "900",
+    "mem": "512"
   }
 }
 
