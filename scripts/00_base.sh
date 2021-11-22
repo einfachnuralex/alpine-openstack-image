@@ -16,3 +16,5 @@ install -D -d -o alpine -g wheel -m 2755 /home/alpine/
 install -D -d -o alpine -g wheel -m 2755 /home/alpine/.ssh
 
 echo 'Defaults exempt_group=wheel' > /etc/sudoers
+
+echo 'PubkeyAcceptedKeyTypes +ssh-rsa' >> /etc/ssh/sshd_config
