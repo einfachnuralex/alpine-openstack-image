@@ -5,9 +5,10 @@
         "root<enter><wait>",
         "ifconfig eth0 up \u0026\u0026 udhcpc -i eth0<enter><wait5>",
         "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
-        "BOOT_SIZE=50 setup-alpine -f answers<enter><wait5>",
+        "BOOT_SIZE=50 setup-alpine -f answers<enter><wait10>",
         "{{user `root_pw`}}<enter><wait>",
-        "{{user `root_pw`}}<enter><wait5>",
+        "{{user `root_pw`}}<enter><wait15>",
+        "no<enter><wait5>",
         "<wait>y<enter><wait15>",
         "rc-service sshd stop<enter>",
         "mount /dev/vg0/lv_root /mnt<enter>",
@@ -19,8 +20,8 @@
       "guest_additions_mode": "disable",
       "guest_os_type": "Linux26_64",
       "http_directory": "http",
-      "iso_checksum": "file:https://dl-cdn.alpinelinux.org/alpine/v3.14/releases/x86_64/alpine-virt-3.14.3-x86_64.iso.sha256",
-      "iso_url": "https://dl-cdn.alpinelinux.org/alpine/v3.14/releases/x86_64/alpine-virt-3.14.3-x86_64.iso",
+      "iso_checksum": "file:https://dl-cdn.alpinelinux.org/alpine/v3.16/releases/x86_64/alpine-virt-3.16.2-x86_64.iso.sha256",
+      "iso_url": "https://dl-cdn.alpinelinux.org/alpine/v3.16/releases/x86_64/alpine-virt-3.16.2-x86_64.iso",
       "shutdown_command": "/sbin/poweroff",
       "ssh_password": "{{user `root_pw`}}",
       "ssh_username": "root",
@@ -39,7 +40,7 @@
           "{{user `cpus`}}"
         ]
       ],
-      "vm_name": "alpine313"
+      "vm_name": "alpine316"
     }
   ],
   "provisioners": [
